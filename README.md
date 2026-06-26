@@ -1,4 +1,3 @@
-# SpendMint
 # SpendMint 💸🪙
 
 **Turn subscription waste into wealth.**
