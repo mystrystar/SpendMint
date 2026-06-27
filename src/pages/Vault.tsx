@@ -1,7 +1,7 @@
 import { Coins, Gem, Wallet } from "lucide-react";
 import { Card } from "../components/ui/Card";
 import { formatCurrency, formatDecimal } from "../lib/utils";
-import { seededArticles } from "../lib/constants";
+import { GOLD_RATE_INR, seededArticles, SILVER_RATE_INR } from "../lib/constants";
 import { useVaultwise } from "../hooks/useVaultwise";
 
 export function Vault() {
@@ -10,12 +10,13 @@ export function Vault() {
   const rewards = data?.rewards ?? [];
   const total = (vault?.goldBalanceInr ?? 0) + (vault?.silverBalanceInr ?? 0) + (vault?.cashSaved ?? 0);
   const history = [
-    ...savings.map((item) => ({ id: item.id, title: `${item.actionType} subscription`, amount: item.amountSaved, date: item.createdAt })),
+    ...savings.map((item) => ({ id: item.id, title: `${item.actionType} subscription`, amount: item.amountSaved, date: item.createdAt, detail: "Avoided renewal" })),
     ...rewards.map((item) => ({
       id: item.id,
       title: `${item.rewardType} reward: ${seededArticles.find((article) => article.id === item.articleId)?.title ?? "Article"}`,
       amount: item.rewardAmount,
       date: item.createdAt,
+      detail: `${formatDecimal(item.rewardAmount / (item.rewardType === "gold" ? GOLD_RATE_INR : SILVER_RATE_INR), 6)} g ${item.rewardType} credited`,
     })),
   ].sort((a, b) => +new Date(b.date) - +new Date(a.date));
 
@@ -53,10 +54,11 @@ export function Vault() {
         <div className="mt-4 grid gap-3">
           {history.length ? (
             history.map((item) => (
-              <div key={item.id} className="flex items-center justify-between rounded-lg border border-slate-200 p-4">
+              <div key={item.id} className="flex items-center justify-between rounded-xl border border-border p-4 transition hover:bg-primary-soft/30">
                 <div>
                   <p className="font-bold text-slate-800">{item.title}</p>
                   <p className="text-sm text-slate-500">{new Date(item.date).toLocaleDateString("en-IN")}</p>
+                  <p className="mt-1 text-xs font-semibold text-primary-deep">{item.detail}</p>
                 </div>
                 <p className="font-extrabold text-primary">{formatCurrency(item.amount)}</p>
               </div>

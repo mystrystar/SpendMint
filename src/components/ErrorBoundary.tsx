@@ -1,5 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from "react";
 import { Card } from "./ui/Card";
+import { APP_COPY } from "../lib/constants";
 
 export class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   state = { hasError: false };
@@ -17,7 +18,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { hasError
       return (
         <Card>
           <h1 className="text-xl font-bold text-slate-900">Something slipped.</h1>
-          <p className="mt-2 text-sm text-slate-600">Refresh the page and Vaultwise will restore from the local cache.</p>
+          <p className="mt-2 text-sm text-slate-600">Refresh the page and {APP_COPY.name} will restore from the local cache.</p>
         </Card>
       );
     }

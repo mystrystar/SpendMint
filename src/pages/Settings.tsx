@@ -24,7 +24,7 @@ export function Settings() {
         <p className="mt-1 text-sm text-slate-600">Device based V1 profile: {deviceId.slice(0, 8)}...</p>
       </div>
       <Card className="grid gap-5">
-        <label className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 p-4 text-sm font-bold text-slate-700">
+        <label className="flex items-center justify-between gap-4 rounded-xl border border-border p-4 text-sm font-bold text-text">
           Renewal notifications
           <input
             type="checkbox"

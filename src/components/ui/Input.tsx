@@ -14,7 +14,7 @@ export function Field({ label, error, children }: { label: string; error?: strin
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(({ className, ...props }, ref) => (
   <input
     ref={ref}
-    className={cn("h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-primary/20 transition focus:ring-4", className)}
+    className={cn("h-11 rounded-xl border border-[#DDE7E3] bg-white px-3 text-sm text-text outline-none transition placeholder:text-muted/60 focus:border-primary focus:ring-2 focus:ring-[#B8E6DA]", className)}
     {...props}
   />
 ));
@@ -23,7 +23,7 @@ Input.displayName = "Input";
 export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(({ className, ...props }, ref) => (
   <select
     ref={ref}
-    className={cn("h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none ring-primary/20 transition focus:ring-4", className)}
+    className={cn("h-11 rounded-xl border border-[#DDE7E3] bg-white px-3 text-sm text-text outline-none transition focus:border-primary focus:ring-2 focus:ring-[#B8E6DA]", className)}
     {...props}
   />
 ));

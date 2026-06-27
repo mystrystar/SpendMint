@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
-import { Check, ChevronLeft, Search } from "lucide-react";
+import { Check, ChevronLeft, PiggyBank, Search, Sparkles, WalletCards } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { Button } from "./ui/Button";
 import { Field, Input, Select } from "./ui/Input";
@@ -7,6 +7,7 @@ import { brandCategories, customBrand, logoUrlForDomain, type BrandOption } from
 import { subscriptionSchema, type SubscriptionFormValues } from "../lib/validation";
 import type { Subscription } from "../types/domain";
 import { cn, toDateInputValue } from "../lib/utils";
+import { SUBSCRIPTION_FORM_COPY } from "../lib/constants";
 
 export function SubscriptionForm({
   initial,
@@ -83,7 +84,7 @@ export function SubscriptionForm({
   return (
     <form onSubmit={handleSubmit} className="grid gap-6">
       <div className="grid grid-cols-3 gap-2">
-        {["Category", "Logo", "Details"].map((label, index) => {
+        {SUBSCRIPTION_FORM_COPY.steps.map((label, index) => {
           const active = step >= index + 1;
           return (
             <button
@@ -92,7 +93,11 @@ export function SubscriptionForm({
               onClick={() => setStep(index + 1)}
               className={cn(
                 "flex min-h-12 items-center justify-center rounded-lg border px-2 text-xs font-extrabold uppercase tracking-wide transition",
-                active ? "border-emerald-700 bg-emerald-900 text-amber-100" : "border-slate-200 bg-white text-slate-400",
+                step === index + 1
+                  ? "border-primary bg-gradient-to-r from-primary to-cash text-white shadow-sm"
+                  : active
+                    ? "border-border bg-white text-primary-deep shadow-sm"
+                    : "border-border bg-white text-muted",
               )}
             >
               {active && step > index + 1 ? <Check className="mr-1 h-4 w-4" /> : null}
@@ -104,7 +109,7 @@ export function SubscriptionForm({
 
       {step === 1 ? (
         <section className="grid gap-4">
-          <h2 className="text-xl font-extrabold text-slate-950">What type of subscription is this?</h2>
+          <h2 className="text-xl font-extrabold text-text">{SUBSCRIPTION_FORM_COPY.categoryQuestion}</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {brandCategories.map((category) => (
               <button
@@ -114,7 +119,7 @@ export function SubscriptionForm({
                   setSelectedCategory(category.name);
                   setStep(2);
                 }}
-                className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-700 hover:shadow-soft"
+                className="rounded-xl border border-border bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-glow"
               >
                 <p className="font-extrabold text-slate-950">{category.name}</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{category.prompt}</p>
@@ -129,13 +134,17 @@ export function SubscriptionForm({
           <div className="flex items-center justify-between gap-3">
             <Button type="button" variant="ghost" onClick={() => setStep(1)}>
               <ChevronLeft className="h-4 w-4" />
-              Back
+              {SUBSCRIPTION_FORM_COPY.back}
             </Button>
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-800">{currentCategory.name}</span>
+            <span className="rounded-full bg-primary-soft px-3 py-1 text-xs font-extrabold text-primary-deep">{currentCategory.name}</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-extrabold text-text">{SUBSCRIPTION_FORM_COPY.providerTitle}</h2>
+            <p className="mt-1 text-sm text-muted">{SUBSCRIPTION_FORM_COPY.providerHelp}</p>
           </div>
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-slate-400" />
-            <Input className="pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search Netflix, Spotify, Canva..." />
+            <Input className="pl-9" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={SUBSCRIPTION_FORM_COPY.providerSearch} />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {[...brands, customBrand].map((brand) => (
@@ -143,7 +152,7 @@ export function SubscriptionForm({
                 type="button"
                 key={`${brand.name}-${brand.domain}`}
                 onClick={() => pickBrand(brand)}
-                className="flex min-h-24 items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-700 hover:shadow-soft"
+                className="flex min-h-24 items-center gap-4 rounded-xl border border-border bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-glow"
               >
                 <BrandLogo name={brand.name} logoUrl={logoUrlForDomain(brand.domain)} />
                 <span>
@@ -158,11 +167,14 @@ export function SubscriptionForm({
 
       {step === 3 ? (
         <section className="grid gap-5">
-          <div className="flex items-center gap-4 rounded-xl border border-emerald-900/10 bg-gradient-to-r from-emerald-950 to-slate-900 p-4 text-white">
-            <BrandLogo name={values.name || selectedBrand.name} logoUrl={values.logoUrl} className="h-14 w-14" />
+          <div className="relative isolate flex min-h-24 items-center gap-4 overflow-hidden rounded-xl border border-border bg-gradient-to-r from-primary-soft via-white to-primary-soft p-4">
+            <Sparkles className="absolute right-28 top-4 -z-10 h-4 w-4 text-primary" />
+            <WalletCards className="absolute -bottom-5 right-5 -z-10 h-24 w-24 rotate-[-8deg] text-primary/20" />
+            <PiggyBank className="absolute bottom-3 right-24 -z-10 h-9 w-9 text-gold/70" />
+            <BrandLogo name={values.name || selectedBrand.name} logoUrl={values.logoUrl} className="h-14 w-14 shadow-sm" />
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-200">Selected subscription</p>
-              <p className="mt-1 text-xl font-extrabold">{values.name || "Custom plan"}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary-deep">{SUBSCRIPTION_FORM_COPY.selectedSubscription}</p>
+              <p className="mt-1 text-xl font-extrabold text-text">{values.name || SUBSCRIPTION_FORM_COPY.customPlan}</p>
             </div>
           </div>
           <Field label="Name" error={errors.name}>
@@ -172,7 +184,7 @@ export function SubscriptionForm({
             <Field label="Category" error={errors.category}>
               <Input value={values.category} onChange={(event) => update("category", event.target.value)} placeholder="Entertainment" />
             </Field>
-            <Field label="Logo domain">
+            <Field label={SUBSCRIPTION_FORM_COPY.providerWebsite}>
               <Input
                 value={values.brandDomain ?? ""}
                 onChange={(event) => {

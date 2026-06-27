@@ -11,7 +11,7 @@ export function BrandLogo({ name, logoUrl, className }: { name: string; logoUrl?
       {logoUrl && !failed ? (
         <img src={logoUrl} alt={`${name} logo`} className="h-full w-full object-contain p-2" onError={() => setFailed(true)} />
       ) : (
-        <div className="grid h-full w-full place-items-center bg-gradient-to-br from-emerald-700 to-amber-500 text-sm font-extrabold text-white">
+        <div className="grid h-full w-full place-items-center bg-gradient-to-br from-primary to-gold text-sm font-extrabold text-white">
           {initial || <WalletCards className="h-5 w-5" />}
         </div>
       )}

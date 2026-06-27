@@ -1,26 +1,28 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { BarChart3, Gauge, Landmark, Plus, Settings, Sparkles } from "lucide-react";
+import { BookOpenText, ChartNoAxesColumnIncreasing, CirclePlus, LayoutGrid, Settings, Vault } from "lucide-react";
 import { cn } from "../lib/utils";
+import { APP_COPY, NAV_ITEMS } from "../lib/constants";
+import { SpendMintLogo } from "./SpendMintLogo";
 
 const links = [
-  { to: "/dashboard", label: "Dashboard", icon: Gauge },
-  { to: "/add", label: "Add", icon: Plus },
-  { to: "/vault", label: "Vault", icon: Landmark },
-  { to: "/content", label: "Earn", icon: Sparkles },
-  { to: "/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/dashboard", label: NAV_ITEMS.dashboard, icon: LayoutGrid },
+  { to: "/add", label: NAV_ITEMS.add, icon: CirclePlus },
+  { to: "/vault", label: NAV_ITEMS.vault, icon: Vault },
+  { to: "/content", label: NAV_ITEMS.earn, icon: BookOpenText },
+  { to: "/analytics", label: NAV_ITEMS.analytics, icon: ChartNoAxesColumnIncreasing },
+  { to: "/settings", label: NAV_ITEMS.settings, icon: Settings },
 ];
 
 export function AppLayout() {
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-background/90 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <NavLink to="/" className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary font-bold text-white">V</span>
+            <span className="grid h-11 w-11 place-items-center rounded-xl border border-border bg-white shadow-sm"><SpendMintLogo className="h-10 w-10" /></span>
             <span>
-              <span className="block text-base font-extrabold text-slate-800">Vaultwise</span>
-              <span className="hidden text-xs font-medium text-slate-500 sm:block">Turn forgotten subscriptions into future wealth</span>
+              <span className="block text-base font-extrabold text-slate-800">{APP_COPY.name}</span>
+              <span className="hidden text-xs font-medium text-slate-500 sm:block">{APP_COPY.tagline}</span>
             </span>
           </NavLink>
           <nav className="hidden items-center gap-1 md:flex">
@@ -30,8 +32,8 @@ export function AppLayout() {
                 to={to}
                 className={({ isActive }) =>
                   cn(
-                    "inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-white",
-                    isActive && "bg-white text-primary shadow-sm",
+                    "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-primary-soft/60 hover:text-primary-deep",
+                    isActive && "bg-white text-primary-deep shadow-sm",
                   )
                 }
               >
@@ -45,7 +47,7 @@ export function AppLayout() {
       <main className="mx-auto max-w-7xl px-4 py-6 pb-24 md:py-8">
         <Outlet />
       </main>
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t border-slate-200 bg-white md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t border-border bg-white/95 backdrop-blur md:hidden">
         {links.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}

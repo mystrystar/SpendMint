@@ -4,17 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#0F766E",
-        gold: "#D4AF37",
-        silver: "#C0C0C0",
-        background: "#FAFAF9",
-        text: "#334155",
+        primary: "#5FB8A5",
+        "primary-soft": "#DDF4EE",
+        "primary-deep": "#2F8F83",
+        gold: "#D9B86C",
+        "gold-soft": "#F7EFD8",
+        silver: "#BFC6CE",
+        "silver-soft": "#F3F5F7",
+        cash: "#8ECFC1",
+        background: "#F9FCFB",
+        surface: "#FFFFFF",
+        border: "#E6F0EC",
+        text: "#1F2937",
+        muted: "#6B7280",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        sans: ["Manrope", "ui-sans-serif", "system-ui"],
       },
       boxShadow: {
-        soft: "0 14px 40px rgba(15, 23, 42, 0.08)",
+        soft: "0 8px 28px rgba(47, 143, 131, 0.08)",
+        glow: "0 12px 36px rgba(95, 184, 165, 0.16)",
       },
     },
   },

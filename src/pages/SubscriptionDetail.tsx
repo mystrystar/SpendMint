@@ -69,7 +69,7 @@ export function SubscriptionDetail() {
       <Card>
         <SubscriptionForm initial={currentSubscription} onSubmit={submit} submitting={saveSubscription.isPending} />
       </Card>
-      <SaveModal subscription={currentSubscription} action={pendingAction ?? "paused"} onClose={() => setPendingAction(null)} onSelect={allocate} />
+      <SaveModal subscription={pendingAction ? currentSubscription : null} action={pendingAction ?? "paused"} onClose={() => setPendingAction(null)} onSelect={allocate} />
     </div>
   );
 }

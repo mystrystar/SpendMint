@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { daysUntilRenewal } from "../lib/billing";
 import type { Preferences, Subscription } from "../types/domain";
+import { APP_COPY } from "../lib/constants";
 
 export function useRenewalNotifications(subscriptions: Subscription[], preferences: Preferences) {
   useEffect(() => {
@@ -17,8 +18,8 @@ export function useRenewalNotifications(subscriptions: Subscription[], preferenc
       .filter((subscription) => subscription.isActive && daysUntilRenewal(subscription) === 1)
       .forEach((subscription) => {
         new Notification(`${subscription.name} renews tomorrow. Still using it?`, {
-          body: "Open Vaultwise to keep, pause, or cancel this renewal.",
-          tag: `vaultwise-${subscription.id}`,
+          body: `Open ${APP_COPY.name} to keep, pause, or cancel this renewal.`,
+          tag: `spendmint-${subscription.id}`,
         });
       });
   }, [subscriptions, preferences.renewalNotifications]);
